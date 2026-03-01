@@ -55,13 +55,15 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
     e.preventDefault();
   };
 
+  const isPDFCert = cert.pdfUrl !== null;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+      className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center backdrop-blur-sm"
       onContextMenu={handleContextMenu}
     >
       <motion.div
@@ -69,46 +71,73 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-black border-2 border-green-400 rounded-lg max-w-4xl w-full max-h-[90vh] p-8 relative shadow-[0_0_30px_rgba(0,255,65,0.3)] overflow-auto"
+        className={`bg-black border-2 border-green-400 rounded-lg w-full relative shadow-[0_0_30px_rgba(0,255,65,0.3)] overflow-auto ${
+          isPDFCert 
+            ? 'h-screen p-0 flex flex-col' 
+            : 'max-w-4xl max-h-[90vh] p-8 m-4'
+        }`}
         onContextMenu={handleContextMenu}
         onCopy={handleCopy}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-green-400/20 rounded transition-all duration-300 z-10"
+          className={`absolute top-4 right-4 p-2 hover:bg-green-400/20 rounded transition-all duration-300 z-50 ${
+            isPDFCert ? 'bg-black/80' : ''
+          }`}
         >
           <X className="w-6 h-6 text-green-400" />
         </button>
 
-        {/* Icon */}
-        <div className="w-20 h-20 mb-6 rounded bg-green-400/10 border border-green-400/30 p-4">
-          <cert.icon className="w-full h-full text-green-400" />
-        </div>
-
-        {/* Content */}
-        <h2 className="text-3xl font-bold text-green-400 font-mono mb-2">{cert.title}</h2>
-        
-        <div className="space-y-4 text-gray-300 font-mono mb-8">
-          <div>
-            <span className="text-cyan-400">issued_by:</span> {cert.issuer}
+        {isPDFCert ? (
+          // Fullscreen PDF Viewer
+          <div className="flex-1 flex items-center justify-center bg-black p-0">
+            <iframe
+              src={`${cert.pdfUrl}#embedded&toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                userSelect: 'none',
+              }}
+              title={cert.title}
+              sandbox="allow-same-origin allow-presentation"
+              onContextMenu={handleContextMenu}
+            />
           </div>
-          
-          <div>
-            <span className="text-cyan-400">file:</span> {cert.file}
-          </div>
+        ) : (
+          // Regular cert details
+          <>
+            {/* Icon */}
+            <div className="w-20 h-20 mb-6 rounded bg-green-400/10 border border-green-400/30 p-4">
+              <cert.icon className="w-full h-full text-green-400" />
+            </div>
 
-          <div className="pt-4 border-t border-green-400/30">
-            <p className="text-green-400/80 leading-relaxed">{cert.details}</p>
-          </div>
+            {/* Content */}
+            <h2 className="text-3xl font-bold text-green-400 font-mono mb-2">{cert.title}</h2>
+            
+            <div className="space-y-4 text-gray-300 font-mono mb-8">
+              <div>
+                <span className="text-cyan-400">issued_by:</span> {cert.issuer}
+              </div>
+              
+              <div>
+                <span className="text-cyan-400">file:</span> {cert.file}
+              </div>
 
-          <div className="pt-4 border-t border-green-400/30">
-            <p className="text-green-400/60 text-sm">✓ SHA256 verified · cert valid</p>
-          </div>
-        </div>
+              <div className="pt-4 border-t border-green-400/30">
+                <p className="text-green-400/80 leading-relaxed">{cert.details}</p>
+              </div>
 
-        {/* PDF Viewer */}
-        {cert.pdfUrl && (
+              <div className="pt-4 border-t border-green-400/30">
+                <p className="text-green-400/60 text-sm">✓ SHA256 verified · cert valid</p>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* PDF Viewer - Old embedded version */}
+        {!isPDFCert && cert.pdfUrl && (
           <div className="mb-8 pt-8 border-t border-green-400/30">
             <h3 className="text-lg font-bold text-green-400 font-mono mb-4">Certificate Preview</h3>
             <div
@@ -126,6 +155,7 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
                 }}
                 title={cert.title}
                 onContextMenu={handleContextMenu}
+                sandbox="allow-same-origin"
               />
             </div>
             <p className="text-xs text-green-400/40 font-mono mt-2">
@@ -134,12 +164,14 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
           </div>
         )}
 
-        <button
-          onClick={onClose}
-          className="w-full py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono font-bold rounded-lg hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300"
-        >
-          [CLOSE] esc
-        </button>
+        {!isPDFCert && (
+          <button
+            onClick={onClose}
+            className="w-full py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono font-bold rounded-lg hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300"
+          >
+            [CLOSE] esc
+          </button>
+        )}
       </motion.div>
     </motion.div>
   );
