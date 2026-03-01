@@ -90,20 +90,60 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
         </button>
 
         {isPDFCert ? (
-          // Fullscreen PDF Viewer
-          <div className="flex-1 flex items-center justify-center bg-black p-0">
-            <iframe
-              src={`${cert.pdfUrl}#embedded&toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-              style={{
-                width: '100%',
-                height: '100%',
-                border: 'none',
-                userSelect: 'none',
-              }}
-              title={cert.title}
-              sandbox="allow-same-origin allow-presentation"
-              onContextMenu={handleContextMenu}
-            />
+          // Fullscreen PDF Viewer with anti-download measures
+          <div className="flex-1 flex flex-col items-center justify-center bg-black p-4">
+            <div className="w-full h-full flex flex-col">
+              {/* PDF Header */}
+              <div className="border-b border-green-400/30 pb-4 mb-4">
+                <h3 className="text-green-400 font-mono text-sm">
+                  📄 {cert.title}
+                </h3>
+                <p className="text-gray-500 text-xs font-mono mt-1">
+                  🔒 Secure view • No download • View only
+                </p>
+              </div>
+              
+              {/* PDF Container - Using object tag to display PDF */}
+              <div 
+                className="flex-1 border border-green-400/20 rounded-lg overflow-hidden bg-gray-900"
+                onContextMenu={handleContextMenu}
+                onCopy={handleCopy}
+              >
+                <object
+                  data={`${cert.pdfUrl}?nocache=${Date.now()}`}
+                  type="application/pdf"
+                  width="100%"
+                  height="100%"
+                  style={{
+                    userSelect: 'none',
+                  }}
+                  onContextMenu={handleContextMenu}
+                >
+                  <div className="w-full h-full flex items-center justify-center bg-black">
+                    <div className="text-center text-gray-400 font-mono">
+                      <p className="mb-4">📋 PDF Preview</p>
+                      <p className="text-xs text-gray-500">{cert.title}</p>
+                      <button
+                        onClick={() => window.open(cert.pdfUrl!, '_blank')}
+                        className="mt-4 px-4 py-2 bg-green-400/10 border border-green-400/30 text-green-400 text-sm font-mono rounded hover:bg-green-400/20"
+                      >
+                        [OPEN IN VIEWER]
+                      </button>
+                    </div>
+                  </div>
+                </object>
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="mt-4 flex gap-3">
+                <button
+                  onClick={onClose}
+                  className="flex-1 py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono text-sm font-bold rounded-lg hover:bg-green-400/20 transition-all"
+                >
+                  [CLOSE] ESC
+                </button>
+              </div>
+            </div>
           </div>
         ) : (
           // Regular cert details
