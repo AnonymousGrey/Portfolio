@@ -36,7 +36,7 @@ const certifications = [
     title: 'Tata Group Cybersecurity Analyst',
     issuer: 'Tata Group',
     file: 'tata_cyber.pem',
-    imageUrl: '/TATA GROUP ANALYST JOB.pdf',
+    imageUrl: '/TATA GROUP ANALYST JOB.jpg',
   }
 ];
 

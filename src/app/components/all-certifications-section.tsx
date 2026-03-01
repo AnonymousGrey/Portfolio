@@ -42,7 +42,7 @@ const certifications = [
     issuer: 'Tata Group',
     file: 'tata_cyber.pem',
     details: 'Specialized cybersecurity analyst certification from leading enterprise organization.',
-    imageUrl: '/TATA GROUP ANALYST JOB.pdf',
+    imageUrl: '/TATA GROUP ANALYST JOB.jpg',
   }
 ];
 
