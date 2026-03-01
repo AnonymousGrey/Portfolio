@@ -29,7 +29,7 @@ const certifications = [
     title: 'Google IT Support Specialization',
     issuer: 'Google',
     file: 'google_it.pem',
-    imageUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.pdf',
+    imageUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.jpg',
   },
   {
     icon: Award,

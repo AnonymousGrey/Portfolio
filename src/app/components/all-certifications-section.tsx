@@ -34,7 +34,7 @@ const certifications = [
     issuer: 'Google',
     file: 'google_it.pem',
     details: 'Complete IT support professional certification covering system administration and troubleshooting.',
-    imageUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.pdf',
+    imageUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.jpg',
   },
   {
     icon: Award,
