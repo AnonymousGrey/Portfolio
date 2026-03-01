@@ -10,8 +10,9 @@ const projects = [
     status: 'RUNNING',
     statusColor: 'text-green-400',
     dir: '~/projects/rakshak/',
-    description: 'Autonomous surveillance drone with sensor integration and MERN-based monitoring dashboard for real-time security operations.',
-    tags: ['IoT', 'Drone Electronics', 'MERN Stack', 'Sensors', 'Surveillance'],
+    description: 'Autonomous surveillance drone application with real-time monitoring and control capabilities.',
+    tags: ['IoT', 'Drone', 'Mobile App', 'Real-time', 'Surveillance'],
+    link: 'https://github.com/AnonymousGrey/Gurdian_Drone_App',
   },
   {
     icon: Bug,
@@ -19,8 +20,9 @@ const projects = [
     status: 'COMPLETED',
     statusColor: 'text-cyan-400',
     dir: '~/projects/malware-analysis/',
-    description: 'Comprehensive malware analysis project involving static and dynamic analysis, behavior monitoring, and indicator extraction.',
-    tags: ['Malware Analysis', 'Forensics', 'Static Analysis', 'Dynamic Analysis', 'IOC'],
+    description: 'Comprehensive malware analysis framework for static and dynamic analysis, behavior monitoring, and threat detection.',
+    tags: ['Malware Analysis', 'Forensics', 'Security', 'Dynamic Analysis', 'Detection'],
+    link: 'https://github.com/AnonymousGrey/Malware-Analysis-on-Test-Bed',
   },
   {
     icon: Server,
@@ -28,8 +30,9 @@ const projects = [
     status: 'COMPLETED',
     statusColor: 'text-cyan-400',
     dir: '~/projects/testbed-setup/',
-    description: 'Built a physical isolated malware laboratory with dedicated server and clients, ensuring complete network isolation and comprehensive documentation.',
-    tags: ['Lab Setup', 'Network Isolation', 'Documentation', 'Security Infrastructure'],
+    description: 'Physical isolated malware laboratory setup guide with comprehensive documentation for secure network isolation.',
+    tags: ['Lab Setup', 'Network Isolation', 'Documentation', 'Security'],
+    link: 'https://github.com/AnonymousGrey/Malware-Analysis-on-Test-Bed',
   }
 ];
 
@@ -91,10 +94,15 @@ export function ProjectsSection() {
               </div>
 
               {/* View Details */}
-              <button className="w-full py-2 px-3 bg-green-400/10 border border-green-400/30 rounded text-green-400 text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,255,65,0.15)]">
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2 px-3 bg-green-400/10 border border-green-400/30 rounded text-green-400 text-xs font-mono font-bold flex items-center justify-center gap-2 hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,255,65,0.15)]"
+              >
                 $ open README.md
                 <ExternalLink className="w-3 h-3" />
-              </button>
+              </a>
             </TerminalCard>
           ))}
         </div>
