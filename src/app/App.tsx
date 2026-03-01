@@ -15,11 +15,14 @@ import { LoadingScreen } from './components/loading-screen';
 import { CustomCursor } from './components/custom-cursor';
 import { CodeRain } from './components/code-rain';
 import { ScanlineOverlay } from './components/scanline-overlay';
+import { RobotButton } from './components/robot-button';
+import { ChallengeSection } from './components/challenge-section';
 import { useState, useEffect } from 'react';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<'home' | 'all-projects' | 'all-certs'>('home');
+  const [showChallenge, setShowChallenge] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -29,6 +32,8 @@ export default function App() {
       } else if (window.location.hash === '#all-certs') {
         setCurrentPage('all-certs');
         window.scrollTo(0, 0);
+      } else if (window.location.hash === '#challenge') {
+        setShowChallenge(true);
       } else {
         setCurrentPage('home');
         window.scrollTo(0, 0);
@@ -42,6 +47,8 @@ export default function App() {
       setCurrentPage('all-projects');
     } else if (window.location.hash === '#all-certs') {
       setCurrentPage('all-certs');
+    } else if (window.location.hash === '#challenge') {
+      setShowChallenge(true);
     }
 
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -81,6 +88,20 @@ export default function App() {
         
         {/* Footer */}
         <Footer />
+
+        {/* Robot Button */}
+        <RobotButton onClick={() => {
+          window.location.hash = '#challenge';
+          setShowChallenge(true);
+        }} />
+
+        {/* Challenge Modal */}
+        {showChallenge && (
+          <ChallengeSection onClose={() => {
+            window.location.hash = '';
+            setShowChallenge(false);
+          }} />
+        )}
       </div>
     );
   }
@@ -115,6 +136,20 @@ export default function App() {
         
         {/* Footer */}
         <Footer />
+
+        {/* Robot Button */}
+        <RobotButton onClick={() => {
+          window.location.hash = '#challenge';
+          setShowChallenge(true);
+        }} />
+
+        {/* Challenge Modal */}
+        {showChallenge && (
+          <ChallengeSection onClose={() => {
+            window.location.hash = '';
+            setShowChallenge(false);
+          }} />
+        )}
       </div>
     );
   }
@@ -150,6 +185,20 @@ export default function App() {
       <AchievementsSection />
       <ContactSection />
       <Footer />
+
+      {/* Robot Button */}
+      <RobotButton onClick={() => {
+        window.location.hash = '#challenge';
+        setShowChallenge(true);
+      }} />
+
+      {/* Challenge Modal */}
+      {showChallenge && (
+        <ChallengeSection onClose={() => {
+          window.location.hash = '';
+          setShowChallenge(false);
+        }} />
+      )}
     </div>
   );
 }
