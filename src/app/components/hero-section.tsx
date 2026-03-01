@@ -145,12 +145,16 @@ export function HeroSection() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <button className="group relative px-8 py-4 bg-green-400/10 border-2 border-green-400 text-green-400 font-bold font-mono rounded-lg overflow-hidden transition-all duration-300 hover:bg-green-400 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,65,0.5)]">
+            <a 
+              href="/resume.pdf" 
+              download="Vivek_Sankath_Resume.pdf"
+              className="group relative px-8 py-4 bg-green-400/10 border-2 border-green-400 text-green-400 font-bold font-mono rounded-lg overflow-hidden transition-all duration-300 hover:bg-green-400 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,65,0.5)]"
+            >
               <span className="relative z-10 flex items-center gap-2">
                 <Download className="w-5 h-5" />
                 [DOWNLOAD] resume.pdf
               </span>
-            </button>
+            </a>
 
             <button 
               onClick={scrollToProjects}
