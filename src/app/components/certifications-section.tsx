@@ -7,31 +7,36 @@ const certifications = [
     icon: Shield,
     title: 'ISC² Cybersecurity Certification',
     issuer: 'ISC²',
-    file: 'isc2_cert.pem'
+    file: 'isc2_cert.pem',
+    pdfUrl: null,
   },
   {
     icon: Lock,
     title: 'CAPT – Certified Associate Penetration Tester',
     issuer: 'The SecOps Group',
-    file: 'capt_cert.pem'
+    file: 'capt_cert.pem',
+    pdfUrl: '/CAPT HackViser Certification.pdf',
   },
   {
     icon: Network,
     title: 'Cisco Cyber Security Essentials',
     issuer: 'Cisco Networking Academy',
-    file: 'cisco_cert.pem'
+    file: 'cisco_cert.pem',
+    pdfUrl: null,
   },
   {
     icon: Laptop,
     title: 'Google IT Support Specialization',
     issuer: 'Google',
-    file: 'google_it.pem'
+    file: 'google_it.pem',
+    pdfUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.pdf',
   },
   {
     icon: Award,
     title: 'Tata Group Cybersecurity Analyst',
     issuer: 'Tata Group',
-    file: 'tata_cyber.pem'
+    file: 'tata_cyber.pem',
+    pdfUrl: '/TATA GROUP ANALYST JOB.pdf',
   }
 ];
 

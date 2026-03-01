@@ -10,6 +10,7 @@ const certifications = [
     issuer: 'ISC²',
     file: 'isc2_cert.pem',
     details: 'Industry-standard cybersecurity certification demonstrating expertise in security principles and practices.',
+    pdfUrl: null,
   },
   {
     icon: Lock,
@@ -17,6 +18,7 @@ const certifications = [
     issuer: 'The SecOps Group',
     file: 'capt_cert.pem',
     details: 'Certified penetration testing professional with hands-on security assessment capabilities.',
+    pdfUrl: '/CAPT HackViser Certification.pdf',
   },
   {
     icon: Network,
@@ -24,6 +26,7 @@ const certifications = [
     issuer: 'Cisco Networking Academy',
     file: 'cisco_cert.pem',
     details: 'Comprehensive understanding of cybersecurity fundamentals and network security principles.',
+    pdfUrl: null,
   },
   {
     icon: Laptop,
@@ -31,6 +34,7 @@ const certifications = [
     issuer: 'Google',
     file: 'google_it.pem',
     details: 'Complete IT support professional certification covering system administration and troubleshooting.',
+    pdfUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.pdf',
   },
   {
     icon: Award,
@@ -38,10 +42,19 @@ const certifications = [
     issuer: 'Tata Group',
     file: 'tata_cyber.pem',
     details: 'Specialized cybersecurity analyst certification from leading enterprise organization.',
+    pdfUrl: '/TATA GROUP ANALYST JOB.pdf',
   }
 ];
 
 function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose: () => void }) {
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
+
+  const handleCopy = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -49,18 +62,21 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
       exit={{ opacity: 0 }}
       onClick={onClose}
       className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+      onContextMenu={handleContextMenu}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-black border-2 border-green-400 rounded-lg max-w-2xl w-full p-8 relative shadow-[0_0_30px_rgba(0,255,65,0.3)]"
+        className="bg-black border-2 border-green-400 rounded-lg max-w-4xl w-full max-h-[90vh] p-8 relative shadow-[0_0_30px_rgba(0,255,65,0.3)] overflow-auto"
+        onContextMenu={handleContextMenu}
+        onCopy={handleCopy}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-green-400/20 rounded transition-all duration-300"
+          className="absolute top-4 right-4 p-2 hover:bg-green-400/20 rounded transition-all duration-300 z-10"
         >
           <X className="w-6 h-6 text-green-400" />
         </button>
@@ -73,7 +89,7 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
         {/* Content */}
         <h2 className="text-3xl font-bold text-green-400 font-mono mb-2">{cert.title}</h2>
         
-        <div className="space-y-4 text-gray-300 font-mono">
+        <div className="space-y-4 text-gray-300 font-mono mb-8">
           <div>
             <span className="text-cyan-400">issued_by:</span> {cert.issuer}
           </div>
@@ -91,9 +107,36 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
           </div>
         </div>
 
+        {/* PDF Viewer */}
+        {cert.pdfUrl && (
+          <div className="mb-8 pt-8 border-t border-green-400/30">
+            <h3 className="text-lg font-bold text-green-400 font-mono mb-4">Certificate Preview</h3>
+            <div
+              className="bg-black/80 border border-green-400/20 rounded-lg overflow-hidden"
+              style={{ userSelect: 'none' }}
+              onContextMenu={handleContextMenu}
+            >
+              <iframe
+                src={`${cert.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                style={{
+                  width: '100%',
+                  height: '500px',
+                  border: 'none',
+                  userSelect: 'none',
+                }}
+                title={cert.title}
+                onContextMenu={handleContextMenu}
+              />
+            </div>
+            <p className="text-xs text-green-400/40 font-mono mt-2">
+              🔒 Secure view · Download disabled · Extraction prevented
+            </p>
+          </div>
+        )}
+
         <button
           onClick={onClose}
-          className="mt-8 w-full py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono font-bold rounded-lg hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300"
+          className="w-full py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono font-bold rounded-lg hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300"
         >
           [CLOSE] esc
         </button>
@@ -148,7 +191,11 @@ export function AllCertificationsSection() {
 
                 {/* Verification */}
                 <div className="pt-3 border-t border-green-400/20">
-                  <p className="text-xs text-green-400/60">✓ view details</p>
+                  {cert.pdfUrl ? (
+                    <p className="text-xs text-green-400/60">🔒 view certificate</p>
+                  ) : (
+                    <p className="text-xs text-green-400/60">✓ view details</p>
+                  )}
                 </div>
               </div>
             </motion.button>
