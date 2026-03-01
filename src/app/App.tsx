@@ -3,6 +3,7 @@ import { AboutSection } from './components/about-section';
 import { SkillsSection } from './components/skills-section';
 import { ExperienceSection } from './components/experience-section';
 import { ProjectsSection } from './components/projects-section';
+import { AllProjectsSection } from './components/all-projects-section';
 import { CertificationsSection } from './components/certifications-section';
 import { AchievementsSection } from './components/achievements-section';
 import { ContactSection } from './components/contact-section';
@@ -49,6 +50,7 @@ export default function App() {
       <SkillsSection />
       <ExperienceSection />
       <ProjectsSection />
+      <AllProjectsSection />
       <CertificationsSection />
       <AchievementsSection />
       <ContactSection />

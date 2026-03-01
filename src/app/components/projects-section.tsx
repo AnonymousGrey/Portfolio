@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Radio, Bug, Server, ExternalLink } from 'lucide-react';
+import { Radio, Bug, Server, ExternalLink, Github } from 'lucide-react';
 import { TerminalHeader } from './glitch-text';
 import { TerminalCard } from './terminal-card';
 
@@ -34,6 +34,13 @@ const projects = [
 ];
 
 export function ProjectsSection() {
+  const scrollToAllProjects = () => {
+    const element = document.getElementById('all-projects');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="projects" className="py-20 px-6 relative">
       <div className="absolute top-0 left-0 right-0 neon-separator" />
@@ -94,6 +101,22 @@ export function ProjectsSection() {
             </TerminalCard>
           ))}
         </div>
+
+        {/* View More Projects Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="mt-12 flex justify-center"
+        >
+          <button
+            onClick={scrollToAllProjects}
+            className="group px-8 py-4 bg-cyan-400/10 border-2 border-cyan-400 text-cyan-400 font-bold font-mono rounded-lg overflow-hidden transition-all duration-300 hover:bg-cyan-400 hover:text-black hover:shadow-[0_0_30px_rgba(0,217,255,0.5)] flex items-center gap-2"
+          >
+            <Github className="w-5 h-5" />
+            [VIEW] more projects --all
+          </button>
+        </motion.div>
       </div>
     </section>
   );
