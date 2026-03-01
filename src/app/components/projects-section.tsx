@@ -6,12 +6,12 @@ import { TerminalCard } from './terminal-card';
 const projects = [
   {
     icon: Radio,
-    title: 'Rakshak – Autonomous Security Drone',
+    title: 'Gurdian Drone App',
     status: 'RUNNING',
     statusColor: 'text-green-400',
-    dir: '~/projects/rakshak/',
-    description: 'Autonomous surveillance drone application with real-time monitoring and control capabilities.',
-    tags: ['IoT', 'Drone', 'Mobile App', 'Real-time', 'Surveillance'],
+    dir: '~/projects/gurdian-drone/',
+    description: 'Mobile application for autonomous drone control and monitoring with real-time surveillance capabilities.',
+    tags: ['Mobile App', 'Drone Control', 'Real-time', 'IoT', 'Surveillance'],
     link: 'https://github.com/AnonymousGrey/Gurdian_Drone_App',
   },
   {
