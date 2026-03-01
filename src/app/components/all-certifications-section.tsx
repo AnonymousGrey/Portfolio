@@ -10,7 +10,7 @@ const certifications = [
     issuer: 'ISC²',
     file: 'isc2_cert.pem',
     details: 'Industry-standard cybersecurity certification demonstrating expertise in security principles and practices.',
-    pdfUrl: null,
+    imageUrl: null,
   },
   {
     icon: Lock,
@@ -18,7 +18,7 @@ const certifications = [
     issuer: 'The SecOps Group',
     file: 'capt_cert.pem',
     details: 'Certified penetration testing professional with hands-on security assessment capabilities.',
-    pdfUrl: '/CAPT HackViser Certification.pdf',
+    imageUrl: '/CAPT HackViser Certification.jpg',
   },
   {
     icon: Network,
@@ -26,7 +26,7 @@ const certifications = [
     issuer: 'Cisco Networking Academy',
     file: 'cisco_cert.pem',
     details: 'Comprehensive understanding of cybersecurity fundamentals and network security principles.',
-    pdfUrl: null,
+    imageUrl: null,
   },
   {
     icon: Laptop,
@@ -34,7 +34,7 @@ const certifications = [
     issuer: 'Google',
     file: 'google_it.pem',
     details: 'Complete IT support professional certification covering system administration and troubleshooting.',
-    pdfUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.pdf',
+    imageUrl: '/GoogleITSupportCertificate_Badge20260208-31-1rvqxa.pdf',
   },
   {
     icon: Award,
@@ -42,7 +42,7 @@ const certifications = [
     issuer: 'Tata Group',
     file: 'tata_cyber.pem',
     details: 'Specialized cybersecurity analyst certification from leading enterprise organization.',
-    pdfUrl: '/TATA GROUP ANALYST JOB.pdf',
+    imageUrl: '/TATA GROUP ANALYST JOB.pdf',
   }
 ];
 
@@ -55,7 +55,7 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
     e.preventDefault();
   };
 
-  const isPDFCert = cert.pdfUrl !== null;
+  const isPDFCert = cert.imageUrl !== null;
 
   return (
     <motion.div
@@ -90,55 +90,45 @@ function CertModal({ cert, onClose }: { cert: typeof certifications[0]; onClose:
         </button>
 
         {isPDFCert ? (
-          // Fullscreen PDF Viewer with anti-download measures
-          <div className="flex-1 flex flex-col items-center justify-center bg-black p-4">
+          // Fullscreen Certificate Image Viewer
+          <div className="flex-1 flex flex-col items-center justify-center bg-black p-0 overflow-hidden">
             <div className="w-full h-full flex flex-col">
-              {/* PDF Header */}
-              <div className="border-b border-green-400/30 pb-4 mb-4">
+              {/* Certificate Header */}
+              <div className="border-b border-green-400/30 p-4 bg-black/50">
                 <h3 className="text-green-400 font-mono text-sm">
-                  📄 {cert.title}
+                  📜 {cert.title}
                 </h3>
                 <p className="text-gray-500 text-xs font-mono mt-1">
-                  🔒 Secure view • No download • View only
+                  🔒 Secure view · No download · View only
                 </p>
               </div>
               
-              {/* PDF Container - Using object tag to display PDF */}
+              {/* Image Container */}
               <div 
-                className="flex-1 border border-green-400/20 rounded-lg overflow-hidden bg-gray-900"
+                className="flex-1 flex items-center justify-center overflow-auto p-4"
                 onContextMenu={handleContextMenu}
                 onCopy={handleCopy}
+                style={{ userSelect: 'none' }}
               >
-                <object
-                  data={`${cert.pdfUrl}?nocache=${Date.now()}`}
-                  type="application/pdf"
-                  width="100%"
-                  height="100%"
+                <img
+                  src={cert.imageUrl}
+                  alt={cert.title}
+                  className="max-w-full max-h-full object-contain shadow-[0_0_30px_rgba(0,255,65,0.2)] rounded-lg border border-green-400/20"
+                  onContextMenu={handleContextMenu}
+                  onDragStart={(e) => e.preventDefault()}
                   style={{
                     userSelect: 'none',
+                    WebkitUserSelect: 'none',
                   }}
-                  onContextMenu={handleContextMenu}
-                >
-                  <div className="w-full h-full flex items-center justify-center bg-black">
-                    <div className="text-center text-gray-400 font-mono">
-                      <p className="mb-4">📋 PDF Preview</p>
-                      <p className="text-xs text-gray-500">{cert.title}</p>
-                      <button
-                        onClick={() => window.open(cert.pdfUrl!, '_blank')}
-                        className="mt-4 px-4 py-2 bg-green-400/10 border border-green-400/30 text-green-400 text-sm font-mono rounded hover:bg-green-400/20"
-                      >
-                        [OPEN IN VIEWER]
-                      </button>
-                    </div>
-                  </div>
-                </object>
+                  onCopy={handleCopy}
+                />
               </div>
               
-              {/* Action Buttons */}
-              <div className="mt-4 flex gap-3">
+              {/* Close Button */}
+              <div className="border-t border-green-400/30 p-4 bg-black/50">
                 <button
                   onClick={onClose}
-                  className="flex-1 py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono text-sm font-bold rounded-lg hover:bg-green-400/20 transition-all"
+                  className="w-full py-2 px-4 bg-green-400/10 border border-green-400/30 text-green-400 font-mono text-sm font-bold rounded-lg hover:bg-green-400/20 transition-all"
                 >
                   [CLOSE] ESC
                 </button>
@@ -263,7 +253,7 @@ export function AllCertificationsSection() {
 
                 {/* Verification */}
                 <div className="pt-3 border-t border-green-400/20">
-                  {cert.pdfUrl ? (
+                  {cert.imageUrl ? (
                     <p className="text-xs text-green-400/60">🔒 view certificate</p>
                   ) : (
                     <p className="text-xs text-green-400/60">✓ view details</p>
