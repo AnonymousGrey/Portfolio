@@ -34,11 +34,8 @@ const projects = [
 ];
 
 export function ProjectsSection() {
-  const scrollToAllProjects = () => {
-    const element = document.getElementById('all-projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const goToAllProjects = () => {
+    window.location.hash = '#all-projects';
   };
 
   return (
@@ -110,7 +107,7 @@ export function ProjectsSection() {
           className="mt-12 flex justify-center"
         >
           <button
-            onClick={scrollToAllProjects}
+            onClick={goToAllProjects}
             className="group px-8 py-4 bg-cyan-400/10 border-2 border-cyan-400 text-cyan-400 font-bold font-mono rounded-lg overflow-hidden transition-all duration-300 hover:bg-cyan-400 hover:text-black hover:shadow-[0_0_30px_rgba(0,217,255,0.5)] flex items-center gap-2"
           >
             <Github className="w-5 h-5" />

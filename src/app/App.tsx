@@ -14,13 +14,69 @@ import { LoadingScreen } from './components/loading-screen';
 import { CustomCursor } from './components/custom-cursor';
 import { CodeRain } from './components/code-rain';
 import { ScanlineOverlay } from './components/scanline-overlay';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState<'home' | 'all-projects'>('home');
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#all-projects') {
+        setCurrentPage('all-projects');
+        window.scrollTo(0, 0);
+      } else {
+        setCurrentPage('home');
+        window.scrollTo(0, 0);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Check initial hash
+    if (window.location.hash === '#all-projects') {
+      setCurrentPage('all-projects');
+    }
+
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   if (isLoading) {
     return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
+  }
+
+  if (currentPage === 'all-projects') {
+    return (
+      <div className="min-h-screen bg-black text-[#e0e0e0] overflow-x-hidden">
+        {/* Background effects */}
+        <div className="fixed inset-0 bg-gradient-to-br from-black via-[#0a0a0a] to-black -z-10" />
+        <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-900/15 via-transparent to-transparent -z-10" />
+        <CodeRain />
+        
+        {/* CRT Scanline Overlay */}
+        <ScanlineOverlay />
+        
+        {/* Custom Cursor */}
+        <CustomCursor />
+        
+        {/* Back Button */}
+        <button
+          onClick={() => {
+            window.location.hash = '';
+            setCurrentPage('home');
+          }}
+          className="fixed top-4 left-4 z-50 px-4 py-2 bg-green-400/10 border border-green-400/30 text-green-400 font-mono text-sm rounded-lg hover:bg-green-400/20 hover:border-green-400/50 transition-all duration-300"
+        >
+          ← back
+        </button>
+
+        {/* All Projects Section */}
+        <AllProjectsSection />
+        
+        {/* Footer */}
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -50,7 +106,6 @@ export default function App() {
       <SkillsSection />
       <ExperienceSection />
       <ProjectsSection />
-      <AllProjectsSection />
       <CertificationsSection />
       <AchievementsSection />
       <ContactSection />

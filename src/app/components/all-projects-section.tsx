@@ -46,7 +46,7 @@ export function AllProjectsSection() {
   }, []);
 
   return (
-    <section id="all-projects" className="min-h-screen py-20 px-4 sm:px-8 relative overflow-hidden">
+    <section id="all-projects" className="min-h-screen py-16 px-4 sm:px-8 relative overflow-hidden pt-20">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <TerminalHeader text="~/projects --all" />
